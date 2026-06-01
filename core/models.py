@@ -77,7 +77,7 @@ class Session:
 
     def get_context_messages(self) -> List[Dict[str, Any]]:
         """Get messages in format for LLM API."""
-        return [msg.to_dict() for msg in self.history]
+        return [msg.to_dict(include_metadata=False) for msg in self.history]
 
     def get(self, key: str, default=None):
         """Dict-like access for compatibility."""
