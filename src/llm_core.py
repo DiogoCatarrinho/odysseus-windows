@@ -409,7 +409,7 @@ def llm_call(url: str, model: str, messages: List[Dict], temperature: float = LL
     if isinstance(headers, dict):
         h.update(headers)
 
-    messages_copy = [msg.copy() for msg in messages]
+    messages_copy = [{k: v for k, v in msg.items() if k != "metadata"} for msg in messages]
 
     # Consolidate multiple system messages into one at the start.
     sys_parts = []
@@ -517,7 +517,7 @@ async def llm_call_async(
 ) -> str:
     """Asynchronous LLM call using httpx with connection pooling, timeout, retry logic, and performance logging."""
     provider = _detect_provider(url)
-    messages_copy = [msg.copy() for msg in messages]
+    messages_copy = [{k: v for k, v in msg.items() if k != "metadata"} for msg in messages]
 
     # Consolidate multiple system messages into one at the start.
     sys_parts = []
@@ -614,7 +614,7 @@ async def stream_llm(url: str, model: str, messages: List[Dict], temperature: fl
       - data: [DONE]                       — end of stream
     """
     provider = _detect_provider(url)
-    messages_copy = [msg.copy() for msg in messages]
+    messages_copy = [{k: v for k, v in msg.items() if k != "metadata"} for msg in messages]
 
     # Consolidate multiple system messages into one at the start.
     # Some models (e.g. Qwen3.5) reject system messages that aren't first.
