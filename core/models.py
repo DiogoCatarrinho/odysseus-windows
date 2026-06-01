@@ -28,10 +28,10 @@ class ChatMessage:
     content: str
     metadata: Optional[Dict[str, Any]] = None
 
-    def to_dict(self) -> Dict[str, Any]:
+    def to_dict(self, include_metadata: bool = False) -> Dict[str, Any]:
         """Convert to dict for API responses."""
         result = {"role": self.role, "content": self.content}
-        if self.metadata:
+        if include_metadata and self.metadata:
             result["metadata"] = self.metadata
         return result
 
